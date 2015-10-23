@@ -8,17 +8,25 @@
 
 #import "FriendsVCTableViewController.h"
 #import <VKSdk.h>
+#import "FriendsLoader.h"
 #import "Friend.h"
 
-@interface FriendsVCTableViewController ()
+@interface FriendsVCTableViewController () <FriendsLoaderDelegate>
 
-@property (strong, nonatomic) NSArray *loadedFriends;
+@property (strong, nonatomic) FriendsLoader *loader;
+
+@property (strong, nonatomic) NSMutableArray *loadedFriends;
 
 @end
 
 @implementation FriendsVCTableViewController
 
 static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, photo_50";
+
+-(void)setLoader:(FriendsLoader *)loader {
+    _loader = loader;
+    _loader.delegate = self;
+}
 
 -(NSManagedObjectContext *)managedObjectContext {
     NSManagedObjectContext *context = nil;
@@ -31,8 +39,7 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationItem setHidesBackButton:YES];
-    [self fetchFriends];
+    [self loadFriends];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -40,41 +47,57 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-
+- (IBAction) loadFriendsOnline {
+    
+    [self.refreshControl beginRefreshing];
+    [self loadFriends];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)fetchFriends {
-    self.friendsRequest = [[VKApi friends] get:@{VK_API_FIELDS : ALL_USER_FIELDS}];
-    [self.friendsRequest executeWithResultBlock: ^(VKResponse *response) {
-        Friend *friendCD = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
-        NSInteger count = ((NSString *) response.json[@"count"]).intValue;
-        NSMutableArray *firstNameArray = [NSMutableArray new];
-        NSMutableArray *lastNameArray = [NSMutableArray new];
-        NSMutableArray *sexArray = [NSMutableArray new];
-        NSMutableArray *bdateArray = [NSMutableArray new];
-        NSMutableArray *avatarArray = [NSMutableArray new];
-        for (int i = 0; i < count; i++) {
-            [firstNameArray addObject:response.json[@"items"][i][@"first_name"]];
-            [lastNameArray addObject:response.json[@"items"][i][@"last_name"]];
-//            [sexArray addObject:response.json[@"items"][i][@"sex"]];
-//            [bdateArray addObject:response.json[@"items"][i][@"bdate"]];
-//            [avatarArray addObject:response.json[@"items"][i][@"photo_50"]];
-//            friendCD.firstName = [firstNameArray objectAtIndex:i];
-//            friendCD.lastName = [lastNameArray objectAtIndex:i];
-//            friendCD.sex = [sexArray objectAtIndex:i];
-//            friendCD.bdate = [bdateArray objectAtIndex:i];
-//            friendCD.avatar = [avatarArray objectAtIndex:i];
-        }
-        self.friendsRequest = nil;
-        NSLog(@"%@", response.request.requestTiming);
-    } errorBlock: ^(NSError *error) {
-        self.friendsRequest = nil;
-    }];
+- (void) loadFriends {
+    NSString *friendsRequest = [[NSString alloc] initWithString:[NSString stringWithFormat:@"https://api.vk.com/method/friends.get?user_id=%@&fields=photo_100", [[VKSdk getAccessToken] userId]]];
+    NSURL *friendsURL = [[NSURL alloc] initWithString:friendsRequest];
+    self.loader = [[FriendsLoader alloc]initWithURL:friendsURL andKey:@"Friends"];
+}
 
+- (void)fetchFriends {
+
+    if (self.refreshControl.refreshing) {
+        [self.refreshControl endRefreshing];
+    }
+    // Because of NSURLSession
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+    
+    // Saving CoreData
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Friend"];
+    NSError *error = nil;
+    //@autoreleasepool {
+    for (id friend in self.loader.friends) {
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@",[friend objectForKey:@"uid"]];
+        NSArray *matches = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+        if (![matches count]) {
+            //NSLog(@"TEST MSG: New friend has been added");
+            Friend *friendCD   = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
+            friendCD.firstName = [friend objectForKey:@"first_name"];
+            friendCD.lastName = [friend objectForKey:@"last_name"];
+            friendCD.uid = [friend objectForKey:@"uid"];
+            friendCD.sex = [friend objectForKey:@"sex"];
+            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
+        }
+    }
+    //}
+    // Saving Context
+    NSError *errorForSave = nil;
+    if (![self.managedObjectContext save:&errorForSave]) {
+        NSLog(@"Unable to save Friends.");
+        NSLog(@"%@", errorForSave);
+    }
 }
 
 #pragma mark - Table view data source
@@ -84,19 +107,24 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return [self.loader.friends count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendsCell" forIndexPath:indexPath];
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"FriendCell"];
+    }
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"first_name"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"last_name"]];
     
     // Configure the cell...
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

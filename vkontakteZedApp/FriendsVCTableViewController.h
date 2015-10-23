@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <VKSdk.h>
 
-@interface FriendsVCTableViewController : UITableViewController
+@interface FriendsVCTableViewController : UITableViewController 
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic, strong) VKRequest * friendsRequest;
+
 
 @end

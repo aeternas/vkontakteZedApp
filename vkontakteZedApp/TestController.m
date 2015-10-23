@@ -33,7 +33,6 @@ static NSString *const ALL_USER_FIELDS = @"first_name";
         for (int i = 0; i < count; i++) {
             [myArray addObject:response.json[@"items"][i][@"first_name"]];
         }
-        NSLog(myArray.description);
         self.callingRequest = nil;
         NSLog(@"%@", response.request.requestTiming);
     } errorBlock: ^(NSError *error) {
