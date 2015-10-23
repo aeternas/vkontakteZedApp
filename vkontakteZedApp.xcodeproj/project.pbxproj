@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453AE9A21BD943BF00E2E3BE /* FriendsVCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */; };
+		45D386371BDA0D3E00134BBA /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D386341BDA0D3E00134BBA /* Friend.m */; };
+		45D386381BDA0D3E00134BBA /* Friend+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D386361BDA0D3E00134BBA /* Friend+CoreDataProperties.m */; };
 		45E330241BCFB6D8009DB56D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330231BCFB6D8009DB56D /* main.m */; };
 		45E330271BCFB6D8009DB56D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330261BCFB6D8009DB56D /* AppDelegate.m */; };
 		45E3302A1BCFB6D8009DB56D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330291BCFB6D8009DB56D /* ViewController.m */; };
@@ -14,9 +17,17 @@
 		45E330301BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45E3302E1BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld */; };
 		45E330321BCFB6D8009DB56D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E330311BCFB6D8009DB56D /* Assets.xcassets */; };
 		45E330351BCFB6D8009DB56D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E330331BCFB6D8009DB56D /* LaunchScreen.storyboard */; };
+		45E330441BD11171009DB56D /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330431BD11171009DB56D /* TestController.m */; };
+		DD02906767C8E75A9FB0D3D9 /* libPods-vkontakteZedApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF72C017577F81F9ADCC9684 /* libPods-vkontakteZedApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsVCTableViewController.h; sourceTree = "<group>"; };
+		453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsVCTableViewController.m; sourceTree = "<group>"; };
+		45D386331BDA0D3E00134BBA /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = SOURCE_ROOT; };
+		45D386341BDA0D3E00134BBA /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = SOURCE_ROOT; };
+		45D386351BDA0D3E00134BBA /* Friend+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Friend+CoreDataProperties.h"; sourceTree = SOURCE_ROOT; };
+		45D386361BDA0D3E00134BBA /* Friend+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Friend+CoreDataProperties.m"; sourceTree = SOURCE_ROOT; };
 		45E3301F1BCFB6D7009DB56D /* vkontakteZedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vkontakteZedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E330231BCFB6D8009DB56D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		45E330251BCFB6D8009DB56D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -28,6 +39,11 @@
 		45E330311BCFB6D8009DB56D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45E330341BCFB6D8009DB56D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45E330361BCFB6D8009DB56D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45E330421BD11171009DB56D /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
+		45E330431BD11171009DB56D /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
+		668FCAF35359E2672E1187C4 /* Pods-vkontakteZedApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkontakteZedApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-vkontakteZedApp/Pods-vkontakteZedApp.debug.xcconfig"; sourceTree = "<group>"; };
+		CF72C017577F81F9ADCC9684 /* libPods-vkontakteZedApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vkontakteZedApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D73E97D5E4E01221E8E451D3 /* Pods-vkontakteZedApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkontakteZedApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-vkontakteZedApp/Pods-vkontakteZedApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,17 +51,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD02906767C8E75A9FB0D3D9 /* libPods-vkontakteZedApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1CE0863D34FBA2A6C9A8BF5A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CF72C017577F81F9ADCC9684 /* libPods-vkontakteZedApp.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		45E330161BCFB6D7009DB56D = {
 			isa = PBXGroup;
 			children = (
 				45E330211BCFB6D7009DB56D /* vkontakteZedApp */,
 				45E330201BCFB6D7009DB56D /* Products */,
+				842A978273438D53C860F003 /* Pods */,
+				1CE0863D34FBA2A6C9A8BF5A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,10 +87,18 @@
 		45E330211BCFB6D7009DB56D /* vkontakteZedApp */ = {
 			isa = PBXGroup;
 			children = (
+				45D386331BDA0D3E00134BBA /* Friend.h */,
+				45D386341BDA0D3E00134BBA /* Friend.m */,
+				45D386351BDA0D3E00134BBA /* Friend+CoreDataProperties.h */,
+				45D386361BDA0D3E00134BBA /* Friend+CoreDataProperties.m */,
 				45E330251BCFB6D8009DB56D /* AppDelegate.h */,
 				45E330261BCFB6D8009DB56D /* AppDelegate.m */,
 				45E330281BCFB6D8009DB56D /* ViewController.h */,
 				45E330291BCFB6D8009DB56D /* ViewController.m */,
+				45E330421BD11171009DB56D /* TestController.h */,
+				45E330431BD11171009DB56D /* TestController.m */,
+				453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */,
+				453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */,
 				45E3302B1BCFB6D8009DB56D /* Main.storyboard */,
 				45E330311BCFB6D8009DB56D /* Assets.xcassets */,
 				45E330331BCFB6D8009DB56D /* LaunchScreen.storyboard */,
@@ -82,6 +117,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		842A978273438D53C860F003 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				668FCAF35359E2672E1187C4 /* Pods-vkontakteZedApp.debug.xcconfig */,
+				D73E97D5E4E01221E8E451D3 /* Pods-vkontakteZedApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,9 +133,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 45E330391BCFB6D8009DB56D /* Build configuration list for PBXNativeTarget "vkontakteZedApp" */;
 			buildPhases = (
+				A38F742388D4E93E5FF1D097 /* Check Pods Manifest.lock */,
 				45E3301B1BCFB6D7009DB56D /* Sources */,
 				45E3301C1BCFB6D7009DB56D /* Frameworks */,
 				45E3301D1BCFB6D7009DB56D /* Resources */,
+				A7D212E32DA8807412B47E1F /* Embed Pods Frameworks */,
+				1958B66C64AC366B4A2C959C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -147,15 +194,67 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1958B66C64AC366B4A2C959C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-vkontakteZedApp/Pods-vkontakteZedApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A38F742388D4E93E5FF1D097 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A7D212E32DA8807412B47E1F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-vkontakteZedApp/Pods-vkontakteZedApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		45E3301B1BCFB6D7009DB56D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				453AE9A21BD943BF00E2E3BE /* FriendsVCTableViewController.m in Sources */,
+				45D386381BDA0D3E00134BBA /* Friend+CoreDataProperties.m in Sources */,
+				45D386371BDA0D3E00134BBA /* Friend.m in Sources */,
 				45E3302A1BCFB6D8009DB56D /* ViewController.m in Sources */,
 				45E330271BCFB6D8009DB56D /* AppDelegate.m in Sources */,
 				45E330241BCFB6D8009DB56D /* main.m in Sources */,
 				45E330301BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld in Sources */,
+				45E330441BD11171009DB56D /* TestController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +362,7 @@
 		};
 		45E3303A1BCFB6D8009DB56D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 668FCAF35359E2672E1187C4 /* Pods-vkontakteZedApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = vkontakteZedApp/Info.plist;
@@ -274,6 +374,7 @@
 		};
 		45E3303B1BCFB6D8009DB56D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D73E97D5E4E01221E8E451D3 /* Pods-vkontakteZedApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = vkontakteZedApp/Info.plist;
@@ -302,6 +403,7 @@
 				45E3303B1BCFB6D8009DB56D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
