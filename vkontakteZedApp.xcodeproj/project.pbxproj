@@ -19,7 +19,6 @@
 		45E330301BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45E3302E1BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld */; };
 		45E330321BCFB6D8009DB56D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E330311BCFB6D8009DB56D /* Assets.xcassets */; };
 		45E330351BCFB6D8009DB56D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45E330331BCFB6D8009DB56D /* LaunchScreen.storyboard */; };
-		45E330441BD11171009DB56D /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330431BD11171009DB56D /* TestController.m */; };
 		DD02906767C8E75A9FB0D3D9 /* libPods-vkontakteZedApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF72C017577F81F9ADCC9684 /* libPods-vkontakteZedApp.a */; };
 /* End PBXBuildFile section */
 
@@ -45,8 +44,6 @@
 		45E330311BCFB6D8009DB56D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45E330341BCFB6D8009DB56D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		45E330361BCFB6D8009DB56D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		45E330421BD11171009DB56D /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
-		45E330431BD11171009DB56D /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
 		668FCAF35359E2672E1187C4 /* Pods-vkontakteZedApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkontakteZedApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-vkontakteZedApp/Pods-vkontakteZedApp.debug.xcconfig"; sourceTree = "<group>"; };
 		CF72C017577F81F9ADCC9684 /* libPods-vkontakteZedApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-vkontakteZedApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73E97D5E4E01221E8E451D3 /* Pods-vkontakteZedApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vkontakteZedApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-vkontakteZedApp/Pods-vkontakteZedApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +69,49 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45B5E8AB1BDBF92800CCC47A /* Useful Classes */ = {
+			isa = PBXGroup;
+			children = (
+				45D386421BDA3CC000134BBA /* FriendsLoader.h */,
+				45D386431BDA3CC000134BBA /* FriendsLoader.m */,
+				45B5E8841BDB71DE00CCC47A /* InternetChecker.h */,
+				45B5E8851BDB71DE00CCC47A /* InternetChecker.m */,
+			);
+			name = "Useful Classes";
+			sourceTree = "<group>";
+		};
+		45B5E8AC1BDBF94200CCC47A /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				45E3302B1BCFB6D8009DB56D /* Main.storyboard */,
+				45E330331BCFB6D8009DB56D /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		45B5E8AD1BDBF95000CCC47A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				45E3302E1BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld */,
+				45B5E8A51BDBEFF000CCC47A /* Friend.h */,
+				45B5E8A61BDBEFF000CCC47A /* Friend.m */,
+				45B5E8A71BDBEFF000CCC47A /* Friend+CoreDataProperties.h */,
+				45B5E8A81BDBEFF000CCC47A /* Friend+CoreDataProperties.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		45B5E8AE1BDBF97300CCC47A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45E330281BCFB6D8009DB56D /* ViewController.h */,
+				45E330291BCFB6D8009DB56D /* ViewController.m */,
+				453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */,
+				453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		45E330161BCFB6D7009DB56D = {
 			isa = PBXGroup;
 			children = (
@@ -93,27 +133,13 @@
 		45E330211BCFB6D7009DB56D /* vkontakteZedApp */ = {
 			isa = PBXGroup;
 			children = (
-				45B5E8A51BDBEFF000CCC47A /* Friend.h */,
-				45B5E8A61BDBEFF000CCC47A /* Friend.m */,
-				45B5E8A71BDBEFF000CCC47A /* Friend+CoreDataProperties.h */,
-				45B5E8A81BDBEFF000CCC47A /* Friend+CoreDataProperties.m */,
 				45E330251BCFB6D8009DB56D /* AppDelegate.h */,
 				45E330261BCFB6D8009DB56D /* AppDelegate.m */,
-				45E330281BCFB6D8009DB56D /* ViewController.h */,
-				45E330291BCFB6D8009DB56D /* ViewController.m */,
-				45E330421BD11171009DB56D /* TestController.h */,
-				45E330431BD11171009DB56D /* TestController.m */,
-				45D386421BDA3CC000134BBA /* FriendsLoader.h */,
-				45D386431BDA3CC000134BBA /* FriendsLoader.m */,
-				45B5E8841BDB71DE00CCC47A /* InternetChecker.h */,
-				45B5E8851BDB71DE00CCC47A /* InternetChecker.m */,
-				453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */,
-				453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */,
-				45E3302B1BCFB6D8009DB56D /* Main.storyboard */,
 				45E330311BCFB6D8009DB56D /* Assets.xcassets */,
-				45E330331BCFB6D8009DB56D /* LaunchScreen.storyboard */,
-				45E330361BCFB6D8009DB56D /* Info.plist */,
-				45E3302E1BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld */,
+				45B5E8AE1BDBF97300CCC47A /* Views */,
+				45B5E8AD1BDBF95000CCC47A /* CoreData */,
+				45B5E8AC1BDBF94200CCC47A /* Storyboards */,
+				45B5E8AB1BDBF92800CCC47A /* Useful Classes */,
 				45E330221BCFB6D8009DB56D /* Supporting Files */,
 			);
 			path = vkontakteZedApp;
@@ -123,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				45E330231BCFB6D8009DB56D /* main.m */,
+				45E330361BCFB6D8009DB56D /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -265,7 +292,6 @@
 				45E330271BCFB6D8009DB56D /* AppDelegate.m in Sources */,
 				45E330241BCFB6D8009DB56D /* main.m in Sources */,
 				45E330301BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld in Sources */,
-				45E330441BD11171009DB56D /* TestController.m in Sources */,
 				45B5E8861BDB71DE00CCC47A /* InternetChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

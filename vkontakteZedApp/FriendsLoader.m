@@ -6,6 +6,8 @@
 //  Copyright © 2015 Ivan Golikov. All rights reserved.
 //
 
+//делегат для управления полученными через API данными
+
 #import "FriendsLoader.h"
 
 @implementation FriendsLoader
@@ -15,6 +17,8 @@
 {
     self = [super init];
     if (self) {
+        
+        //настраиваем получение ответа API
         
         NSURLSession *session = [NSURLSession sessionWithConfiguration:
                                  [NSURLSessionConfiguration ephemeralSessionConfiguration]];

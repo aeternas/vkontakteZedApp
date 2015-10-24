@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "TestController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

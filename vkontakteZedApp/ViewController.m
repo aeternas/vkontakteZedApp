@@ -6,6 +6,9 @@
 //  Copyright © 2015 Ivan Golikov. All rights reserved.
 //
 
+
+//используем VKSDK – авторизацию при помощи его и его обязательные методы
+
 #import "ViewController.h"
 #import <VKSdk.h>
 
@@ -21,7 +24,6 @@ static NSArray  * SCOPE = nil;
 
 
 - (void)viewDidLoad {
-    SCOPE = @[VK_PER_FRIENDS, VK_PER_WALL, VK_PER_AUDIO, VK_PER_PHOTOS, VK_PER_NOHTTPS, VK_PER_EMAIL, VK_PER_MESSAGES];
     [super viewDidLoad];
     [VKSdk initializeWithDelegate:self andAppId:@"5082054"];
     if ([VKSdk wakeUpSession])

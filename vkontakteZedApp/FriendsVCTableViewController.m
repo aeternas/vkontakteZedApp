@@ -14,6 +14,8 @@
 
 @interface FriendsVCTableViewController () <FriendsLoaderDelegate>
 
+//инициализируем объект для управления получаемыми данными API, а также для взаимодействия с Core Data в оффлайне
+
 @property (strong, nonatomic) FriendsLoader *loader;
 @property (strong, nonatomic) NSArray *loadedFriends;
 
@@ -26,6 +28,8 @@
     _loader.delegate = self;
 }
 
+//Core Data
+
 -(NSManagedObjectContext *)managedObjectContext {
     NSManagedObjectContext *context = nil;
     id delegate = [[UIApplication sharedApplication] delegate];
@@ -37,20 +41,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //как действовать – в онлайн или оффлайн-режиме
     if ([InternetChecker isConnection])
     {
         [self loadFriends];
     } else {
         [self loadSavedFriends];
     }
-    
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+//действие по "потянуть вниз"
 
 - (IBAction) loadFriendsOnline {
     
@@ -60,22 +60,18 @@
         [self loadFriends];
         
     } else {
+        
+        //алерт на случай, если нет подключения
+        
         UIAlertController* offline = [UIAlertController alertControllerWithTitle:@"Please check internet connection." message:@"Can't update data" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction* action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
         [offline addAction:action];
         [self presentViewController:offline animated:YES completion:^{
-            [UIView transitionWithView:offline.view duration:1.0 options:UIViewAnimationOptionTransitionFlipFromTop animations:nil completion:nil];
+            [UIView transitionWithView:offline.view duration:1.0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
         }];
 
         [self.refreshControl endRefreshing];
     }
-    
-//    [self loadSavedFriends];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)fetchFriends {
@@ -83,39 +79,38 @@
     if (self.refreshControl.refreshing) {
         [self.refreshControl endRefreshing];
     }
-    // Because of NSURLSession
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
     
-    // Saving CoreData
+    // Сохраняем CoreData для использования в оффлайне
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Friend"];
     NSError *error = nil;
-    //@autoreleasepool {
     for (id friend in self.loader.friends) {
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@",[friend objectForKey:@"uid"]];
         NSArray *matches = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
         if (![matches count]) {
-//            NSLog(@"TEST MSG: New friend has been added");
-            Friend *friendCD   = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
-            friendCD.firstName = [friend objectForKey:@"first_name"];
-            friendCD.lastName = [friend objectForKey:@"last_name"];
-            friendCD.uid = [friend objectForKey:@"uid"];
-            friendCD.sex = [friend objectForKey:@"sex"];
-            friendCD.avatar = [friend objectForKey:@"photo_100"];
-            friendCD.bdate = [friend objectForKey:@"bdate"];
-            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
+            Friend *friendCoreData = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
+            friendCoreData.firstName  = [friend objectForKey:@"first_name"];
+            friendCoreData.lastName   = [friend objectForKey:@"last_name"];
+            friendCoreData.uid        = [friend objectForKey:@"uid"];
+            friendCoreData.sex        = [friend objectForKey:@"sex"];
+            friendCoreData.avatar     = [friend objectForKey:@"photo_100"];
+            friendCoreData.bdate      = [friend objectForKey:@"bdate"];
+            friendCoreData.avatar     = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
         }
     }
-    //}
-    // Saving Context
+    
+    //сохраняем
     NSError *errorForSave = nil;
     if (![self.managedObjectContext save:&errorForSave]) {
-        NSLog(@"Friends have not been saved");
         NSLog(@"%@", errorForSave);
     }
     
 }
+
+//запрос API
 
 - (void) loadFriends {
     NSString *friendsRequest = [[NSString alloc] initWithString:[NSString stringWithFormat:@"https://api.vk.com/method/friends.get?user_id=%@&fields=photo_100,sex,bdate", [[VKSdk getAccessToken] userId]]];
@@ -123,6 +118,7 @@
     self.loader = [[FriendsLoader alloc]initWithURL:friendsURL andKey:@"Friends"];
 }
 
+//загружаем сохранённые данные
 
 - (void)loadSavedFriends
 {
@@ -138,11 +134,12 @@
         NSError *error = nil;
         NSAsynchronousFetchResult *asyncFetchResult = (NSAsynchronousFetchResult *)[weakSelf.managedObjectContext executeRequest:asyncFetchRequest error:&error];
         if (error) {
-            NSLog(@"Unable to execute asynchronous fetch result.");
             NSLog(@"%@", error);
         }
     }];
 }
+
+//переносим данные в массив
 
 - (void)processAsyncFetchRequest:(NSAsynchronousFetchResult *)result
 {
@@ -152,44 +149,38 @@
     }
 }
 
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
+//настройка таблицы для онлайн или оффлайн-режима соответственно
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if ([self.loader.friends count]) {
-        
        return [self.loader.friends count];
-        
     } else if ([self.loadedFriends count]) {
-        
         return [self.loadedFriends count];
-        
     } else {
-        
         return  1;
-        
     }
-
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"friendsCell" forIndexPath:indexPath];
-    
     NSDictionary *sexDict = @{@0: @"Unknown", @1 : @"Female", @2 : @"Male"};
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"friendsCell"];
     }
     
+    //онлайн-режим
+    
     if ([self.loader.friends count]) {
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"first_name"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"last_name"]];
-    
     NSString *dateString = [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"];
         
     if (!dateString) {
@@ -206,9 +197,10 @@
         
     } else if ([self.loadedFriends count]) {
         
+        //оффлайн-режим
+        
         Friend *friend = [self.loadedFriends objectAtIndex:indexPath.row];
         cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", friend.firstName, friend.lastName];
-        
         NSString *dateString = friend.bdate;
         
         if (!dateString) {
@@ -225,15 +217,19 @@
         
     } else {
         cell.textLabel.text = @"No data";
+        cell.detailTextLabel.text = @"You should load data at least once";
     }
-//     Configure the cell...
-    
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 64;
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 @end

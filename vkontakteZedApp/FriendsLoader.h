@@ -6,6 +6,9 @@
 //  Copyright © 2015 Ivan Golikov. All rights reserved.
 //
 
+
+//делегат для управления полученными через API данными
+
 #import <Foundation/Foundation.h>
 
 @class FriendsLoader;

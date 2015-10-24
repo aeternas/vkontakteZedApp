@@ -6,6 +6,8 @@
 //  Copyright © 2015 Ivan Golikov. All rights reserved.
 //
 
+//класс для проверки соединения
+
 #import "InternetChecker.h"
 
 @implementation InternetChecker
