@@ -33,16 +33,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XP8-sB-Vhp">
-                                <rect key="frame" x="203" y="285" width="228" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XP8-sB-Vhp">
+                                <rect key="frame" x="186" y="285" width="228" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Authorize and load friends Online"/>
                                 <connections>
                                     <action selector="authorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H9q-mo-Py2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jD-if-xoI">
-                                <rect key="frame" x="215" y="332" width="205" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jD-if-xoI">
+                                <rect key="frame" x="198" y="332" width="205" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Get friends list from CoreData"/>
                                 <connections>
