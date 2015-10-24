@@ -16,6 +16,7 @@
 
 @property (strong, nonatomic) FriendsLoader *loader;
 @property (strong, nonatomic) NSArray *loadedFriends;
+@property (strong, nonatomic) NSDictionary *sexDict;
 
 @end
 
@@ -37,7 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    _sexDict = @{@0: @"Unknown", @1 : @"Female", @2 : @"Male"};
     if ([InternetChecker isConnection])
     {
         [self loadFriends];
@@ -94,16 +95,10 @@
             friendCD.firstName = [friend objectForKey:@"first_name"];
             friendCD.lastName = [friend objectForKey:@"last_name"];
             friendCD.uid = [friend objectForKey:@"uid"];
-        if ([[friend objectForKey:@"sex"] isEqual: @"1"]) {
-            friendCD.sex = @"Female";
-        } else if ([[friend objectForKey:@"sex"] isEqual: @"2"]) {
-            friendCD.sex = @"Male";
-        } else {
-            friendCD.sex = @"Unknown";
-        }
+            friendCD.sex = [friend objectForKey:@"sex"];
             friendCD.avatar = [friend objectForKey:@"photo_100"];
             friendCD.bdate = [friend objectForKey:@"bdate"];
-//            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
+            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
         }
     }
     //}
@@ -173,6 +168,8 @@
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"friendsCell" forIndexPath:indexPath];
     
+    NSDictionary *sexDict = @{@0: @"Unknown", @1 : @"Female", @2 : @"Male"};
+    
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"friendsCell"];
     }
@@ -181,28 +178,38 @@
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"first_name"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"last_name"]];
     
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"DOB: %@, sex: %@", [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]];
-    
-    
-    NSDictionary *myDict = @{@0: @"Unknown", @1 : @"Female", @2 : @"Male"};
-    
     NSString *dateString = [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"];
-    
+        
     if (!dateString) {
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [myDict objectForKey:[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [sexDict objectForKey:[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]]];
         
     } else {
         
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, DOB: %@", [myDict objectForKey:[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, DOB: %@", [sexDict objectForKey:[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"]];
         
     }
     
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"photo_100"]]]]];
+        
     } else if ([self.loadedFriends count]) {
         
         Friend *friend = [self.loadedFriends objectAtIndex:indexPath.row];
         cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", friend.firstName, friend.lastName];
+        
+        NSString *dateString = friend.bdate;
+        
+        if (!dateString) {
+            
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [sexDict objectForKey:friend.sex]];
+            
+        } else {
+            
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, DOB: %@", [sexDict objectForKey:friend.sex], friend.bdate];
+            
+        }
+        
+        cell.imageView.image = friend.avatar;
         
     } else {
         cell.textLabel.text = @"No data";
