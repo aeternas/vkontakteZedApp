@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Friend (CoreDataProperties)
 
-@property (nullable, nonatomic, retain) id avatar;
+@property (nullable, nonatomic, retain) NSString *avatar;
 @property (nullable, nonatomic, retain) NSString *firstName;
 @property (nullable, nonatomic, retain) NSString *lastName;
 @property (nullable, nonatomic, retain) NSNumber *sex;

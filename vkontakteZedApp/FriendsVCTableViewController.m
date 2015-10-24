@@ -9,6 +9,7 @@
 #import "FriendsVCTableViewController.h"
 #import <VKSdk.h>
 #import "FriendsLoader.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "Friend.h"
 
 @interface FriendsVCTableViewController () <FriendsLoaderDelegate>
@@ -82,13 +83,15 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@",[friend objectForKey:@"uid"]];
         NSArray *matches = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
         if (![matches count]) {
-            //NSLog(@"TEST MSG: New friend has been added");
+            NSLog(@"TEST MSG: New friend has been added");
             Friend *friendCD   = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
             friendCD.firstName = [friend objectForKey:@"first_name"];
             friendCD.lastName = [friend objectForKey:@"last_name"];
             friendCD.uid = [friend objectForKey:@"uid"];
             friendCD.sex = [friend objectForKey:@"sex"];
-            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
+            friendCD.avatar = [friend objectForKey:@"photo_100"];
+            NSLog(@"%@", friendCD.sex);
+//            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
         }
     }
     //}
@@ -98,6 +101,7 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
         NSLog(@"Unable to save Friends.");
         NSLog(@"%@", errorForSave);
     }
+    
 }
 
 #pragma mark - Table view data source
@@ -120,9 +124,18 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"first_name"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"last_name"]];
     
+    
+    
+    cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"photo_100"]]]]];
+    
     // Configure the cell...
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 64;
 }
 
 
