@@ -1,5 +1,5 @@
 //
-//  FriendsFetcher.m
+//  FriendsLoader.m
 //  vkontakteZedApp
 //
 //  Created by AIR on 23.10.15.

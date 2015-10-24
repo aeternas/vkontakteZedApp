@@ -101,7 +101,7 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
-		45B5E8AE1BDBF97300CCC47A /* Views */ = {
+		45B5E8AE1BDBF97300CCC47A /* VCs */ = {
 			isa = PBXGroup;
 			children = (
 				45E330281BCFB6D8009DB56D /* ViewController.h */,
@@ -109,7 +109,7 @@
 				453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */,
 				453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */,
 			);
-			name = Views;
+			name = VCs;
 			sourceTree = "<group>";
 		};
 		45E330161BCFB6D7009DB56D = {
@@ -136,10 +136,10 @@
 				45E330251BCFB6D8009DB56D /* AppDelegate.h */,
 				45E330261BCFB6D8009DB56D /* AppDelegate.m */,
 				45E330311BCFB6D8009DB56D /* Assets.xcassets */,
-				45B5E8AE1BDBF97300CCC47A /* Views */,
+				45B5E8AB1BDBF92800CCC47A /* Useful Classes */,
+				45B5E8AE1BDBF97300CCC47A /* VCs */,
 				45B5E8AD1BDBF95000CCC47A /* CoreData */,
 				45B5E8AC1BDBF94200CCC47A /* Storyboards */,
-				45B5E8AB1BDBF92800CCC47A /* Useful Classes */,
 				45E330221BCFB6D8009DB56D /* Supporting Files */,
 			);
 			path = vkontakteZedApp;
