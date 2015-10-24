@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		453AE9A21BD943BF00E2E3BE /* FriendsVCTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */; };
+		45B5E8861BDB71DE00CCC47A /* InternetChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E8851BDB71DE00CCC47A /* InternetChecker.m */; };
+		45B5E8971BDB98DE00CCC47A /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E8941BDB98DE00CCC47A /* Friend.m */; };
+		45B5E8981BDB98DE00CCC47A /* Friend+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 45B5E8961BDB98DE00CCC47A /* Friend+CoreDataProperties.m */; };
 		45D386441BDA3CC000134BBA /* FriendsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D386431BDA3CC000134BBA /* FriendsLoader.m */; };
-		45D3866D1BDACAAA00134BBA /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D3866A1BDACAAA00134BBA /* Friend.m */; };
-		45D3866E1BDACAAA00134BBA /* Friend+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 45D3866C1BDACAAA00134BBA /* Friend+CoreDataProperties.m */; };
 		45E330241BCFB6D8009DB56D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330231BCFB6D8009DB56D /* main.m */; };
 		45E330271BCFB6D8009DB56D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330261BCFB6D8009DB56D /* AppDelegate.m */; };
 		45E3302A1BCFB6D8009DB56D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45E330291BCFB6D8009DB56D /* ViewController.m */; };
@@ -25,12 +26,14 @@
 /* Begin PBXFileReference section */
 		453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsVCTableViewController.h; sourceTree = "<group>"; };
 		453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsVCTableViewController.m; sourceTree = "<group>"; };
+		45B5E8841BDB71DE00CCC47A /* InternetChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternetChecker.h; sourceTree = "<group>"; };
+		45B5E8851BDB71DE00CCC47A /* InternetChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InternetChecker.m; sourceTree = "<group>"; };
+		45B5E8931BDB98DE00CCC47A /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
+		45B5E8941BDB98DE00CCC47A /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
+		45B5E8951BDB98DE00CCC47A /* Friend+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Friend+CoreDataProperties.h"; sourceTree = "<group>"; };
+		45B5E8961BDB98DE00CCC47A /* Friend+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Friend+CoreDataProperties.m"; sourceTree = "<group>"; };
 		45D386421BDA3CC000134BBA /* FriendsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsLoader.h; sourceTree = "<group>"; };
 		45D386431BDA3CC000134BBA /* FriendsLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsLoader.m; sourceTree = "<group>"; };
-		45D386691BDACAAA00134BBA /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
-		45D3866A1BDACAAA00134BBA /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
-		45D3866B1BDACAAA00134BBA /* Friend+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Friend+CoreDataProperties.h"; sourceTree = "<group>"; };
-		45D3866C1BDACAAA00134BBA /* Friend+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Friend+CoreDataProperties.m"; sourceTree = "<group>"; };
 		45E3301F1BCFB6D7009DB56D /* vkontakteZedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vkontakteZedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E330231BCFB6D8009DB56D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		45E330251BCFB6D8009DB56D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -90,10 +93,10 @@
 		45E330211BCFB6D7009DB56D /* vkontakteZedApp */ = {
 			isa = PBXGroup;
 			children = (
-				45D386691BDACAAA00134BBA /* Friend.h */,
-				45D3866A1BDACAAA00134BBA /* Friend.m */,
-				45D3866B1BDACAAA00134BBA /* Friend+CoreDataProperties.h */,
-				45D3866C1BDACAAA00134BBA /* Friend+CoreDataProperties.m */,
+				45B5E8931BDB98DE00CCC47A /* Friend.h */,
+				45B5E8941BDB98DE00CCC47A /* Friend.m */,
+				45B5E8951BDB98DE00CCC47A /* Friend+CoreDataProperties.h */,
+				45B5E8961BDB98DE00CCC47A /* Friend+CoreDataProperties.m */,
 				45E330251BCFB6D8009DB56D /* AppDelegate.h */,
 				45E330261BCFB6D8009DB56D /* AppDelegate.m */,
 				45E330281BCFB6D8009DB56D /* ViewController.h */,
@@ -102,6 +105,8 @@
 				45E330431BD11171009DB56D /* TestController.m */,
 				45D386421BDA3CC000134BBA /* FriendsLoader.h */,
 				45D386431BDA3CC000134BBA /* FriendsLoader.m */,
+				45B5E8841BDB71DE00CCC47A /* InternetChecker.h */,
+				45B5E8851BDB71DE00CCC47A /* InternetChecker.m */,
 				453AE9A01BD943BF00E2E3BE /* FriendsVCTableViewController.h */,
 				453AE9A11BD943BF00E2E3BE /* FriendsVCTableViewController.m */,
 				45E3302B1BCFB6D8009DB56D /* Main.storyboard */,
@@ -253,14 +258,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				453AE9A21BD943BF00E2E3BE /* FriendsVCTableViewController.m in Sources */,
+				45B5E8981BDB98DE00CCC47A /* Friend+CoreDataProperties.m in Sources */,
 				45E3302A1BCFB6D8009DB56D /* ViewController.m in Sources */,
 				45D386441BDA3CC000134BBA /* FriendsLoader.m in Sources */,
-				45D3866D1BDACAAA00134BBA /* Friend.m in Sources */,
+				45B5E8971BDB98DE00CCC47A /* Friend.m in Sources */,
 				45E330271BCFB6D8009DB56D /* AppDelegate.m in Sources */,
 				45E330241BCFB6D8009DB56D /* main.m in Sources */,
 				45E330301BCFB6D8009DB56D /* vkontakteZedApp.xcdatamodeld in Sources */,
 				45E330441BD11171009DB56D /* TestController.m in Sources */,
-				45D3866E1BDACAAA00134BBA /* Friend+CoreDataProperties.m in Sources */,
+				45B5E8861BDB71DE00CCC47A /* InternetChecker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -33,17 +33,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XP8-sB-Vhp">
-                                <rect key="frame" x="284" y="285" width="66" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XP8-sB-Vhp">
+                                <rect key="frame" x="203" y="285" width="228" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Authorize"/>
+                                <state key="normal" title="Authorize and load friends Online"/>
                                 <connections>
                                     <action selector="authorize:" destination="BYZ-38-t0r" eventType="touchUpInside" id="H9q-mo-Py2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1jD-if-xoI">
+                                <rect key="frame" x="215" y="332" width="205" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Get friends list from CoreData"/>
+                                <connections>
+                                    <segue destination="Rh8-zc-yar" kind="show" id="Ppg-Ll-fgR"/>
                                 </connections>
                             </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1jD-if-xoI" firstAttribute="top" secondItem="XP8-sB-Vhp" secondAttribute="bottom" constant="17" id="Jdy-cW-yvc"/>
+                            <constraint firstItem="XP8-sB-Vhp" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="QIU-bD-uee"/>
+                            <constraint firstItem="1jD-if-xoI" firstAttribute="centerX" secondItem="XP8-sB-Vhp" secondAttribute="centerX" id="g8B-6F-JTd"/>
+                            <constraint firstItem="XP8-sB-Vhp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pcu-Iq-Sic"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3tE-z4-FQ1"/>
                     <connections>
@@ -107,12 +121,30 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendsCell" id="w4K-MW-pql">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendsCell" textLabel="f8d-IX-c0U" detailTextLabel="pIJ-bQ-g2x" style="IBUITableViewCellStyleSubtitle" id="w4K-MW-pql">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w4K-MW-pql" id="rmV-yT-YOh">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f8d-IX-c0U">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pIJ-bQ-g2x">
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
@@ -136,4 +168,7 @@
             <point key="canvasLocation" x="1354" y="163"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ppg-Ll-fgR"/>
+    </inferredMetricsTieBreakers>
 </document>

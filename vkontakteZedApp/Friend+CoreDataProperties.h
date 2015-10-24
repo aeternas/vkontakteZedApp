@@ -2,7 +2,7 @@
 //  Friend+CoreDataProperties.h
 //  
 //
-//  Created by AIR on 23.10.15.
+//  Created by AIR on 24.10.15.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,8 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *avatar;
 @property (nullable, nonatomic, retain) NSString *firstName;
 @property (nullable, nonatomic, retain) NSString *lastName;
-@property (nullable, nonatomic, retain) NSNumber *sex;
+@property (nullable, nonatomic, retain) NSString *sex;
 @property (nullable, nonatomic, retain) NSNumber *uid;
+@property (nullable, nonatomic, retain) NSString *bdate;
 
 @end
 

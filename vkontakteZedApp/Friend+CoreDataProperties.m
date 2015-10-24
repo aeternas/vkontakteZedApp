@@ -2,7 +2,7 @@
 //  Friend+CoreDataProperties.m
 //  
 //
-//  Created by AIR on 23.10.15.
+//  Created by AIR on 24.10.15.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,5 +18,6 @@
 @dynamic lastName;
 @dynamic sex;
 @dynamic uid;
+@dynamic bdate;
 
 @end

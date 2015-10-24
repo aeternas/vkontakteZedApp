@@ -9,20 +9,17 @@
 #import "FriendsVCTableViewController.h"
 #import <VKSdk.h>
 #import "FriendsLoader.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "Friend.h"
+#import "InternetChecker.h"
 
 @interface FriendsVCTableViewController () <FriendsLoaderDelegate>
 
 @property (strong, nonatomic) FriendsLoader *loader;
-
-@property (strong, nonatomic) NSMutableArray *loadedFriends;
+@property (strong, nonatomic) NSArray *loadedFriends;
 
 @end
 
 @implementation FriendsVCTableViewController
-
-static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, photo_50";
 
 -(void)setLoader:(FriendsLoader *)loader {
     _loader = loader;
@@ -40,7 +37,15 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self loadFriends];
+    
+    if ([InternetChecker isConnection])
+    {
+        [self loadFriends];
+    } else {
+        [self loadSavedFriends];
+    }
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -52,6 +57,7 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
     
     [self.refreshControl beginRefreshing];
     [self loadFriends];
+//    [self loadSavedFriends];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,7 +66,7 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
 }
 
 - (void) loadFriends {
-    NSString *friendsRequest = [[NSString alloc] initWithString:[NSString stringWithFormat:@"https://api.vk.com/method/friends.get?user_id=%@&fields=photo_100", [[VKSdk getAccessToken] userId]]];
+    NSString *friendsRequest = [[NSString alloc] initWithString:[NSString stringWithFormat:@"https://api.vk.com/method/friends.get?user_id=%@&fields=photo_100,sex,bdate", [[VKSdk getAccessToken] userId]]];
     NSURL *friendsURL = [[NSURL alloc] initWithString:friendsRequest];
     self.loader = [[FriendsLoader alloc]initWithURL:friendsURL andKey:@"Friends"];
 }
@@ -83,14 +89,20 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@",[friend objectForKey:@"uid"]];
         NSArray *matches = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
         if (![matches count]) {
-            NSLog(@"TEST MSG: New friend has been added");
+//            NSLog(@"TEST MSG: New friend has been added");
             Friend *friendCD   = [NSEntityDescription insertNewObjectForEntityForName:@"Friend" inManagedObjectContext:self.managedObjectContext];
             friendCD.firstName = [friend objectForKey:@"first_name"];
             friendCD.lastName = [friend objectForKey:@"last_name"];
             friendCD.uid = [friend objectForKey:@"uid"];
-            friendCD.sex = [friend objectForKey:@"sex"];
+        if ([[friend objectForKey:@"sex"] isEqual: @"1"]) {
+            friendCD.sex = @"Female";
+        } else if ([[friend objectForKey:@"sex"] isEqual: @"2"]) {
+            friendCD.sex = @"Male";
+        } else {
+            friendCD.sex = @"Unknown";
+        }
             friendCD.avatar = [friend objectForKey:@"photo_100"];
-            NSLog(@"%@", friendCD.sex);
+            friendCD.bdate = [friend objectForKey:@"bdate"];
 //            friendCD.avatar = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[friend objectForKey:@"photo_100"]]]];
         }
     }
@@ -98,10 +110,39 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
     // Saving Context
     NSError *errorForSave = nil;
     if (![self.managedObjectContext save:&errorForSave]) {
-        NSLog(@"Unable to save Friends.");
+        NSLog(@"Friends have not been saved");
         NSLog(@"%@", errorForSave);
     }
     
+}
+
+- (void)loadSavedFriends
+{
+    __weak FriendsVCTableViewController *weakSelf = self;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Friend"];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"firstName" ascending:YES]];
+    NSAsynchronousFetchRequest *asyncFetchRequest = [[NSAsynchronousFetchRequest alloc] initWithFetchRequest:fetchRequest completionBlock:^(NSAsynchronousFetchResult *result) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf processAsyncFetchRequest:result];
+        });
+    }];
+    [self.managedObjectContext performBlock:^{
+        NSError *error = nil;
+        NSAsynchronousFetchResult *asyncFetchResult = (NSAsynchronousFetchResult *)[weakSelf.managedObjectContext executeRequest:asyncFetchRequest error:&error];
+        if (error) {
+            NSLog(@"Unable to execute asynchronous fetch result.");
+            NSLog(@"%@", error);
+        }
+    }];
+}
+
+- (void)processAsyncFetchRequest:(NSAsynchronousFetchResult *)result
+{
+    if (result.finalResult) {
+        self.loadedFriends = result.finalResult;
+        NSLog(@"TEST MSG: There are %lu friends", (unsigned long)[self.loadedFriends count]);
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Table view data source
@@ -111,24 +152,62 @@ static NSString *const ALL_USER_FIELDS = @"first_name, last_name, sex, bdate, ph
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.loader.friends count];
+    
+    if ([self.loader.friends count]) {
+        
+       return [self.loader.friends count];
+        
+    } else if ([self.loadedFriends count]) {
+        
+        return [self.loadedFriends count];
+        
+    } else {
+        
+        return  1;
+        
+    }
+
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"friendsCell" forIndexPath:indexPath];
+    
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"friendsCell" forIndexPath:indexPath];
     
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"friendsCell"];
     }
     
+    if ([self.loader.friends count]) {
+    
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"first_name"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"last_name"]];
     
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"DOB: %@, sex: %@", [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]];
     
+    
+    NSDictionary *myDict = @{@0: @"Unknown", @1 : @"Female", @2 : @"Male"};
+    
+    NSString *dateString = [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"];
+    
+    if (!dateString) {
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", [myDict objectForKey:[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]]];
+        
+    } else {
+        
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, DOB: %@", [myDict objectForKey:[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"sex"]], [[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"bdate"]];
+        
+    }
     
     cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[[self.loader.friends objectAtIndex:indexPath.row] objectForKey:@"photo_100"]]]]];
-    
-    // Configure the cell...
+    } else if ([self.loadedFriends count]) {
+        
+        Friend *friend = [self.loadedFriends objectAtIndex:indexPath.row];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", friend.firstName, friend.lastName];
+        
+    } else {
+        cell.textLabel.text = @"No data";
+    }
+//     Configure the cell...
     
     return cell;
 }
