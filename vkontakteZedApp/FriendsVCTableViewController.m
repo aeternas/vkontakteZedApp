@@ -16,7 +16,6 @@
 
 @property (strong, nonatomic) FriendsLoader *loader;
 @property (strong, nonatomic) NSArray *loadedFriends;
-@property (strong, nonatomic) NSDictionary *sexDict;
 
 @end
 
@@ -38,7 +37,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _sexDict = @{@0: @"Unknown", @1 : @"Female", @2 : @"Male"};
     if ([InternetChecker isConnection])
     {
         [self loadFriends];
@@ -56,20 +54,28 @@
 
 - (IBAction) loadFriendsOnline {
     
-    [self.refreshControl beginRefreshing];
-    [self loadFriends];
+    if ([InternetChecker isConnection]) {
+        
+        [self.refreshControl beginRefreshing];
+        [self loadFriends];
+        
+    } else {
+        UIAlertController* offline = [UIAlertController alertControllerWithTitle:@"Please check internet connection." message:@"Can't update data" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:nil];
+        [offline addAction:action];
+        [self presentViewController:offline animated:YES completion:^{
+            [UIView transitionWithView:offline.view duration:1.0 options:UIViewAnimationOptionTransitionFlipFromTop animations:nil completion:nil];
+        }];
+
+        [self.refreshControl endRefreshing];
+    }
+    
 //    [self loadSavedFriends];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void) loadFriends {
-    NSString *friendsRequest = [[NSString alloc] initWithString:[NSString stringWithFormat:@"https://api.vk.com/method/friends.get?user_id=%@&fields=photo_100,sex,bdate", [[VKSdk getAccessToken] userId]]];
-    NSURL *friendsURL = [[NSURL alloc] initWithString:friendsRequest];
-    self.loader = [[FriendsLoader alloc]initWithURL:friendsURL andKey:@"Friends"];
 }
 
 - (void)fetchFriends {
@@ -111,6 +117,13 @@
     
 }
 
+- (void) loadFriends {
+    NSString *friendsRequest = [[NSString alloc] initWithString:[NSString stringWithFormat:@"https://api.vk.com/method/friends.get?user_id=%@&fields=photo_100,sex,bdate", [[VKSdk getAccessToken] userId]]];
+    NSURL *friendsURL = [[NSURL alloc] initWithString:friendsRequest];
+    self.loader = [[FriendsLoader alloc]initWithURL:friendsURL andKey:@"Friends"];
+}
+
+
 - (void)loadSavedFriends
 {
     __weak FriendsVCTableViewController *weakSelf = self;
@@ -135,7 +148,6 @@
 {
     if (result.finalResult) {
         self.loadedFriends = result.finalResult;
-        NSLog(@"TEST MSG: There are %lu friends", (unsigned long)[self.loadedFriends count]);
         [self.tableView reloadData];
     }
 }
@@ -223,50 +235,5 @@
 {
     return 64;
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

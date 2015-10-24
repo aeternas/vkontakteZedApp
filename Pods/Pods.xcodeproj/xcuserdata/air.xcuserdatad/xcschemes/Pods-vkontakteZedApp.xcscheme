@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '3028D5436B5421AE92803295'
+               BlueprintIdentifier = '2A89FB474D0D1458147115F9'
                BlueprintName = 'Pods-vkontakteZedApp'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-vkontakteZedApp.a'>

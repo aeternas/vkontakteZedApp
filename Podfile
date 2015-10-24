@@ -5,7 +5,6 @@ platform :ios, '9.0'
 
 target 'vkontakteZedApp' do
 pod "VK-ios-sdk"
-pod "SDWebImage"
 
 end
 

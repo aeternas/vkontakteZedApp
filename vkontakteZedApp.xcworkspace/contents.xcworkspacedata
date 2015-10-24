@@ -2,18 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Friend+CoreDataProperties.h">
-   </FileRef>
-   <FileRef
-      location = "group:Friend+CoreDataProperties.m">
-   </FileRef>
-   <FileRef
-      location = "group:Friend.h">
-   </FileRef>
-   <FileRef
-      location = "group:Friend.m">
-   </FileRef>
-   <FileRef
       location = "group:vkontakteZedApp.xcodeproj">
    </FileRef>
    <FileRef
